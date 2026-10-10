@@ -1,75 +1,111 @@
-# Chapter 1 — Circuit Abstractions and Basic Elements
+# Chapter 1 — The Circuit Abstraction
 
-**Status:** In progress; this is **not** a claim that I have completed the entire chapter.
+**Primary textbook:** Anant Agarwal and Jeffrey H. Lang, *Foundations of Analog and Digital Electronic Circuits* (Morgan Kaufmann, 2005), Chapter 1.  
+**Educational context:** The textbook was developed for the authors' MIT **6.002 — Circuits and Electronics** course. This is my independent study notebook, **not** an MIT affiliation or course-completion record.  
+**Study status:** **§§1.1–1.7 studied; §1.8 introduction reached; §1.8.1 onward not yet studied.**  
+**Writing:** Original English notes based on personal reading, derivations, and hands-on experiments. No textbook figures or passages are reproduced.
 
-**Reference:** Anant Agarwal and Jeffrey H. Lang, *Foundations of Analog and Digital Electronic Circuits* (2005), associated with MIT 6.002 (*Circuits and Electronics*).
+## Reading map and detailed notes
 
-These are original study notes in my own words, linked to my experiments. They are not a reproduction of the textbook.
+| Textbook section | Main ideas | My notes | Progress |
+| --- | --- | --- | --- |
+| §1.1 — The Power of Abstraction | Hierarchies of models; discretization | [Detailed notes](chapter-01/01-power-of-abstraction.md) | Studied |
+| §1.2 — The Lumped Circuit Abstraction | Terminals, black boxes, ideal wires, circuits | [Detailed notes](chapter-01/02-lumped-circuit-abstraction.md) | Studied |
+| §1.3 — The Lumped Matter Discipline | Three fundamental constraints; finite signal speed | [Detailed notes](chapter-01/03-lumped-matter-discipline.md) | Studied |
+| §1.4 — Limitations of the Lumped Circuit Abstraction | Propagation, parasitics, distributed models | [Detailed notes](chapter-01/04-limitations.md) | Studied |
+| §1.5 — Practical Two-Terminal Elements | Batteries, material resistance, power, sign convention | [Detailed notes](chapter-01/05-practical-two-terminal-elements.md) | Studied |
+| §1.5.1 — Batteries | Voltage, energy, capacity, series/parallel cells | [Within §1.5](chapter-01/05-practical-two-terminal-elements.md#151--batteries) | Studied |
+| §1.5.2 — Linear Resistors | Ohm's law, resistivity, geometry, sheet resistance | [Within §1.5](chapter-01/05-practical-two-terminal-elements.md#152--linear-resistors) | Studied |
+| §1.5.3 — Associated Variables Convention | Signs, absorbed/delivered power, energy | [Within §1.5](chapter-01/05-practical-two-terminal-elements.md#153--associated-variables-convention) | Studied |
+| §1.6 — Ideal Two-Terminal Elements | Ideal source, conductor, resistor, element laws | [Detailed notes](chapter-01/06-ideal-two-terminal-elements.md) | Studied |
+| §1.6.1 — Ideal Voltage Sources, Wires, and Resistors | Independent sources, conductance | [Within §1.6](chapter-01/06-ideal-two-terminal-elements.md#161--ideal-voltage-sources-wires-and-resistors) | Studied |
+| §1.6.2 — Element Laws | $v$–$i$ characteristics of primitive elements | [Within §1.6](chapter-01/06-ideal-two-terminal-elements.md#162--element-laws) | Studied |
+| §1.6.3 — The Current Source—Another Ideal Two-Terminal Element | Current source and ideal limits | [Within §1.6](chapter-01/06-ideal-two-terminal-elements.md#163--the-current-source-another-ideal-two-terminal-element) | Studied |
+| §1.7 — Modeling Physical Elements | Source resistance, physical models, validity | [Detailed notes](chapter-01/07-modeling-physical-elements.md) | Studied |
+| §1.8 — Signal Representation | Voltage/current representing energy and information | [Introduction notes](chapter-01/08-signal-representation-introduction.md) | Introduction only |
+| §1.8.1 — Analog Signals | — | Not yet written | **Next** |
+| §1.8.2 — Digital Signals / Value Discretization | — | Not yet written | Not started |
+| §1.9 — Summary and Exercises | — | Not yet written | Not started |
 
-## 1. Why do we use a circuit abstraction?
+The status reflects my *reading progress*, not a claim that every exercise has been solved or every concept fully mastered.
 
-Real electronic devices are governed by electromagnetic fields. Nevertheless, when the physical dimensions and operating conditions make distributed effects negligible, many practical circuits can be represented by a network of **lumped elements** connected by ideal wires. This makes it possible to reason about circuit behavior in terms of voltages and currents rather than the full electromagnetic field everywhere.
+## Concept map
 
-Key quantities:
+```text
+Why abstract? (§1.1)
+       │
+       ▼
+Describe devices via terminals (§1.2)
+       │
+       ▼
+Specify when terminal variables are valid (§1.3)
+       │
+       ├──→ Recognize invalid regimes (§1.4)
+       │
+       ▼
+Study physical resistor/battery behavior (§1.5)
+       │
+       ▼
+Define ideal building blocks + element laws (§1.6)
+       │
+       ▼
+Build useful models of real devices (§1.7)
+       │
+       ▼
+View voltage/current as signals (§1.8 intro)
+       │
+       ▼
+Next: Analog Signals (§1.8.1)
+```
 
-- **Electric current** $i = dq/dt$: the rate at which charge passes a point, in amperes (A).
-- **Voltage**: electric potential difference between two nodes, in volts (V).
-- **Terminal**: a connection point through which an element interacts with the rest of a circuit.
-- **Node**: a group of points modeled as electrically connected by ideal conductors.
+## Important equations from what I studied
 
-**Model limitations:** At sufficiently high frequencies or for long wires, effects such as propagation delay, parasitic capacitance, and inductance may matter. The lumped-element model is an approximation with a range of validity, not a universal description.
+| Concept | Relationship | Conditions / interpretation |
+| --- | --- | --- |
+| Charge flow | $i=dq/dt$ | Current is rate of charge transfer |
+| Ohmic resistor | $v=iR$ | Element law with matched reference directions |
+| Material resistance | $R=\rho\ell/A$ | Uniform geometry/material; applicable conditions |
+| Planar sheet resistance | $R=R_{\square}\ell/w$, $R_{\square}=\rho/h$ | Same film thickness and material |
+| Conductance | $G=1/R$, $i=Gv$ | Ideal linear resistor |
+| Absorbed power | $p=vi$ | **Associated variables convention** |
+| Resistor power | $p=i^2R=v^2/R$ | $R>0$ |
+| Energy | $w=\int p(t)dt$ | Signed according to power convention |
+| Ideal voltage source | $v=V_s$ | Prescribed voltage |
+| Ideal current source | $i=I_s$ | Prescribed current |
+| Ideal wire | $v=0$ | Arbitrary finite current in valid network |
+| Ideal open | $i=0$ | Arbitrary finite voltage in valid network |
+| Loaded physical source | $V_t=V_0-I_{\mathrm{out}}r$ | Series internal resistance; current **out of** positive terminal |
+| Propagation check | $t_{\mathrm{prop}}\ll T_{\mathrm{signal}}$ | Part of the lumped-matter discipline |
 
-## 2. Two-terminal elements and sign conventions
+These expressions are a **reference sheet**; derivations, limits, and examples appear in the section notes linked above.
 
-A two-terminal element can be described by a relationship between the voltage across its terminals and the current through it. Assigning reference directions matters: negative values are meaningful and indicate a direction opposite to the chosen reference.
+## Connecting textbook study to hands-on experiments
 
-For a passive element under the **passive sign convention**, $p=vi$ is the power absorbed by that element.
+The lab exercises do not follow the textbook's chapter sequence exactly. For example, I measured **KCL**, **KVL**, and voltage division *before* formally reading the textbook's full Chapter 2 treatment of network analysis. This is a conscious distinction between practical exploration and reading completion.
 
-## 3. Resistors and Ohm's law
+| Laboratory activity | Supporting ideas from Chapter 1 | Experiment log |
+| --- | --- | --- |
+| Resistor/voltage/current measurement | Element laws, terminal quantities, idealized models | [01 — Basic measurements](../../experiments/01-measurements.md) |
+| Equal/unequal series resistors | Ohm's law, voltages, power, reference directions | [02 — Series circuits](../../experiments/02-series-circuits.md) |
+| Two parallel resistors and branch currents | Conductance, node connectivity, model testing | [03 — Parallel circuits](../../experiments/03-parallel-circuits.md) |
 
-For an ideal ohmic resistor:
+![Components for the early breadboard experiments](../../photos/images/IMG_7694.jpg)
 
-$$
-V = IR
-$$
+![Two-branch measurement setup](../../photos/images/IMG_7705.jpg)
 
-where $V$ is the voltage across the resistor, $I$ is the current through it, and $R$ is its resistance in ohms (Ω).
+[All 29 lab photos](../../photos/README.md)
 
-Rearranging the equation gives:
+## How I want to continue these notes
 
-$$
-I = \frac{V}{R}, \qquad R = \frac{V}{I}.
-$$
+For each new section:
 
-A nominal 1 kΩ resistor supplied with 4.91 V should carry approximately $4.91\text{ mA}$, provided there are no additional series resistances or significant meter effects.
+1. Read the actual textbook section before marking it studied.
+2. Explain definitions and assumptions in my own words.
+3. Derive or interpret the key equations with correct units and signs.
+4. Include an original numerical example where useful.
+5. Relate it to a **measured** experiment only when that experiment was actually performed.
+6. Clearly separate **observed values**, **theoretical predictions**, and **questions for future investigation**.
 
-The [basic measurement experiment](../../experiments/01-measurements.md) tested resistance, continuity, voltage, and a first attempt at current measurement.
+**Next reading:** §1.8.1, **Analog Signals**. Notes for this subsection should be added *after* studying it.
 
-![Resistor package used in the experiments](../../photos/images/IMG_7663.jpg)
-
-## 4. Short circuits, open circuits, and breadboard nodes
-
-- **Ideal short circuit:** two points are connected with negligible resistance, so the voltage between them is approximately zero.
-- **Ideal open circuit:** a broken current path, so current through that path is zero.
-
-I tested the breadboard with a multimeter. Within a numbered row on the same side of the center gap, holes are electrically connected. Across the center gap, corresponding row numbers are not connected. This is a simple physical demonstration of what a **node** is.
-
-![EIC-801 breadboard](../../photos/images/IMG_7666.jpg)
-
-## 5. Connecting theory to larger circuits
-
-The hands-on exercises also introduced circuit relationships that I am studying alongside the textbook:
-
-- **Series resistors:** the same current flows through each resistor; the voltage drops add. See [Experiment 02](../../experiments/02-series-circuits.md).
-- **Parallel resistors:** each branch shares the same terminal voltage; branch currents add. See [Experiment 03](../../experiments/03-parallel-circuits.md).
-- **Kirchhoff's laws:** they help constrain currents at nodes (KCL) and voltage changes around closed loops (KVL).
-
-These experiments are organized for practical learning rather than to claim they exactly match the textbook's chapter order.
-
-## Questions to investigate next
-
-- What quantitative conditions determine when the lumped-circuit approximation is justified?
-- How much of a measured deviation comes from resistor tolerance, source variation, probe contact, or the meter itself?
-- How does the circuit change when we add a capacitor and consider **time-dependent** behavior?
-
-**Next reading:** Continue Chapter 1, including the discussion of signals.
+[← Repository README](../../README.md)
