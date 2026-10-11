@@ -22,12 +22,15 @@ This repository is my independent electronics engineering notebook. I study circ
 | [01 — Basic measurements](experiments/01-measurements.md) | Resistance, breadboard continuity, voltage, current | 1 kΩ resistor ≈ 1.000 kΩ; Arduino supply ≈ 4.91 V |
 | [02 — Series circuits](experiments/02-series-circuits.md) | Voltage division and Kirchhoff's Voltage Law (KVL) | Equal resistors: 2.45 V and 2.44 V; current: 2.41 mA |
 | [03 — Parallel circuits](experiments/03-parallel-circuits.md) | Equivalent resistance and Kirchhoff's Current Law (KCL) | 490 Ω equivalent resistance; 9.68 mA total; 4.89 mA and 4.88 mA branch currents |
+| [04 — RC charging and discharging](experiments/04-rc-charging-discharging.md) | Time constant, capacitor polarity, charge/discharge paths | 4.90 V measured supply; qualitative voltage rise; discharge reading reached 0 V |
+| [05 — LED and Arduino blink](experiments/05-led-blink.md) | LED polarity, current limiting, GPIO output and timed blinking | Red LED lit; sketch uploaded; visible 1 s on/off sequence programmed |
+| [06 — Button and digital input](experiments/06-button-digital-input.md) | `INPUT_PULLUP`, `digitalRead()`, two-lead switch wiring | Circuit and sketch prepared; upload error observed; press-to-light response pending verification |
 
-**Experiment dates:** October 10–11, 2026. Values are transcribed from readings observed during the experiments; calculations and measurements are labeled separately. Some measurements were affected by unstable probe contact.
+**Experiment dates:** October 10–12, 2026. Values are transcribed from readings observed during the experiments; calculations and measurements are labeled separately. Some measurements were affected by unstable probe contact. Experiment 06 remains in progress; its button-triggered behavior has not been independently verified.
 
 ## Photo documentation
 
-All **29 photographs** from these experiments are available in the [photo gallery](photos/README.md) and on the [one-page overview](photos/overview.jpg). The experiment notes also link directly to photographs of the relevant equipment and circuit iterations. Photographs show the actual bench setups, including intermediate and occasionally incorrect wiring configurations; they should be used alongside the verified schematic, not as unqualified wiring instructions.
+**40 photographs and other images** from these experiments are available in the [photo gallery](photos/README.md); the [one-page overview](photos/overview.jpg) still covers the first 29 photos. Newly added media include selected video-frame montages and an Arduino IDE screenshot. The experiment notes also link directly to photographs of the relevant equipment and circuit iterations. Photographs show the actual bench setups, including intermediate and occasionally incorrect wiring configurations; they should be used alongside the verified schematic, not as unqualified wiring instructions.
 
 <div align="center">
 <img src="photos/images/IMG_7669.jpg" alt="Arduino UNO R4 Minima" width="31%" />
@@ -40,7 +43,9 @@ All **29 photographs** from these experiments are available in the [photo galler
 - Arduino UNO R4 Minima, powered via USB and used as an approximately 5 V supply
 - EIC-801 solderless breadboard and jumper wires
 - MASTECH MAS-838 digital multimeter
-- Discrete resistors, primarily 1 kΩ and 10 kΩ
+- Discrete resistors, primarily 1 kΩ, 10 kΩ, and 100 kΩ
+- 100 µF polarized electrolytic capacitor, LED, and two-lead pushbutton
+- Arduino IDE for code upload and GPIO experiments
 
 ## Engineering workflow
 
@@ -55,7 +60,7 @@ A reusable [experiment template](templates/experiment-template.md) keeps future 
 
 ## Next topics
 
-Capacitors and diodes → transistors, MOSFETs, and operational amplifiers → Arduino I/O → sensors → servo/motor control → custom circuits → robotics.
+Verify the two-lead button input → PWM LED brightness → servo control → sensors (ultrasonic rangefinder and IMU) → I²C/OLED → embedded-system integration → robotics. Continue deeper capacitor, diode, transistor, MOSFET, and operational-amplifier theory alongside practical experiments.
 
 ## Safety notes
 
@@ -63,3 +68,5 @@ Capacitors and diodes → transistors, MOSFETs, and operational amplifiers → A
 - Connect a voltmeter **in parallel** with the component being measured.
 - Insert an ammeter **in series** with the branch being measured; never connect an ammeter directly across the supply's 5 V and GND terminals.
 - Confirm multimeter input jacks and ranges before reconnecting power.
+- Check LED and electrolytic-capacitor polarity and use a current-limiting resistor for the LED.
+- Use properly fitting connectors; do not force wide component leads into breadboard sockets.

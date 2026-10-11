@@ -1,6 +1,6 @@
 # Experiment Photo Gallery
 
-**29 photographs** taken during the October 10–11, 2026 electronics experiments.
+**40 images** from the October 10–12, 2026 electronics experiments (including video-frame montages and an IDE screenshot).
 
 These photos document real intermediate setups, not only verified final circuits. Some images show wiring that was later changed or corrected; use the [experiment reports](../README.md#hands-on-experiments) and their circuit models for authoritative electrical connections.
 
@@ -103,3 +103,43 @@ The published copies have been resized and re-encoded **without EXIF/GPS metadat
 
 ### IMG_7705 — Branch-current test after changing the 5 V connection
 ![Branch-current test after changing the 5 V connection](images/IMG_7705.jpg)
+
+
+## 2026-10-12 — RC capacitor charging and discharging
+
+### IMG_7735 — 100 µF electrolytic capacitor and 100 kΩ RC wiring, close-up
+![100 µF capacitor and 100 kΩ series resistor on the breadboard](images/IMG_7735.jpg)
+
+### IMG_7736 — Initial RC voltage-measurement wiring before fixing a contact issue
+![Initial RC measurement arrangement that later required a capacitor-lead correction](images/IMG_7736.jpg)
+
+### IMG_7737 — Resistor placed across the capacitor for discharge
+![Discharge circuit with the resistor connecting the capacitor terminals](images/IMG_7737.jpg)
+
+## 2026-10-12 — LED output and Arduino IDE
+
+### IMG_7741 — Red LED illuminated through a 1 kΩ current-limiting resistor
+![Illuminated red LED on the breadboard](images/IMG_7741.jpg)
+
+### IMG_7742 — Arduino UNO R4 Minima digital pin D8 connection
+![Close-up of jumper connected to Arduino D8](images/IMG_7742.jpg)
+
+### arduino-upload-success — Arduino IDE output after successful blink-sketch upload
+![Arduino IDE showing successful compile and upload output](images/arduino-upload-success.jpg)
+
+### led-blink-frames — Selected frames from the external LED blink video
+![Video-frame montage showing the red LED switching on and off](images/led-blink-frames.jpg)
+
+## 2026-10-12 — Two-lead switch and digital input
+
+### IMG_7748 — Two-lead momentary pushbutton with wide metal terminals
+![Two-lead pushbutton placed on a red work surface](images/IMG_7748.jpg)
+
+### IMG_7750 — Blue male-to-female jumper wires used with the switch
+![Pack of blue male-to-female jumper wires](images/IMG_7750.jpg)
+
+### IMG_7751 — Button wiring alongside the external LED circuit
+![Arduino, external LED, and button connected with jumper wires](images/IMG_7751.jpg)
+
+### switch-test-frames — Selected frames from the button-input trial
+![Video-frame montage with changing red LED state; button timing remains unverified](images/switch-test-frames.jpg)
