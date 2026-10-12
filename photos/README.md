@@ -143,3 +143,43 @@ The published copies have been resized and re-encoded **without EXIF/GPS metadat
 
 ### switch-test-frames — Selected frames from the button-input trial
 ![Video-frame montage with changing red LED state; button timing remains unverified](images/switch-test-frames.jpg)
+
+## 2026-10-12 — PWM LED fading and measured average voltage
+
+### pwm-fade-frames — Selected frames from the LED fading video
+![Video frame selection showing an externally connected red LED changing brightness under PWM control](images/pwm-fade-frames.jpg)
+
+The DC-voltage measurements (**2.40 V** at PWM 128 and **1.20 V** at PWM 64) were noted in [Experiment 07](../experiments/07-pwm-led-voltage.md); these frame images do not show the meter display.
+
+## 2026-10-12 to 2026-10-13 — External supply and SG90 servo
+
+### IMG_7756 — SG90 servo, AC adapter, and DC-jack terminal connector
+![Parts arranged for the external-powered servo experiment](images/IMG_7756.jpg)
+
+### IMG_7757 — AC adapter rating label
+![AC adapter label showing 5 V 2 A output and center-positive polarity](images/IMG_7757.jpg)
+
+### IMG_7758 — DC-jack polarity marking
+![Screw-terminal adapter with separate embossed negative and positive terminals](images/IMG_7758.jpg)
+
+### IMG_7761 — External power terminal wiring
+![Green and yellow conductors attached to the DC power connector](images/IMG_7761.jpg)
+
+### IMG_7763 — SG90 wiring, intermediate connection
+![Arduino and SG90 with three-position servo connector and signal wiring](images/IMG_7763.jpg)
+
+### IMG_7765 — Common ground wiring
+![USB-powered Arduino, servo, external adapter, and common ground node on breadboard](images/IMG_7765.jpg)
+
+### IMG_7768 — Servo horn installed
+![White servo horn fitted to the SG90 shaft to visualize motion](images/IMG_7768.jpg)
+
+### servo-sweep-frames — Initial servo movement trial
+![Selected frames from servo movement video; the shaft rotation was confirmed during the trial](images/servo-sweep-frames.jpg)
+
+## 2026-10-13 — Pushbutton-controlled servo and stateful toggle
+
+### servo-button-frames — Servo button-control video selection
+![Frames showing changes in servo horn position during the button input experiment](images/servo-button-frames.jpg)
+
+The user confirmed that the servo changed position with the button and that the later press-to-toggle program worked. See [Experiment 09](../experiments/09-button-servo-toggle.md) for code and limitations.

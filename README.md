@@ -25,12 +25,15 @@ This repository is my independent electronics engineering notebook. I study circ
 | [04 — RC charging and discharging](experiments/04-rc-charging-discharging.md) | Time constant, capacitor polarity, charge/discharge paths | 4.90 V measured supply; qualitative voltage rise; discharge reading reached 0 V |
 | [05 — LED and Arduino blink](experiments/05-led-blink.md) | LED polarity, current limiting, GPIO output and timed blinking | Red LED lit; sketch uploaded; visible 1 s on/off sequence programmed |
 | [06 — Button and digital input](experiments/06-button-digital-input.md) | `INPUT_PULLUP`, `digitalRead()`, two-lead switch wiring | Circuit and sketch prepared; upload error observed; press-to-light response pending verification |
+| [07 — PWM LED brightness](experiments/07-pwm-led-voltage.md) | PWM duty cycle, LED fade, D9-to-GND DC voltage | `128`: **2.40 V**; `64`: **1.20 V**; calculated comparisons **2.46 V / 1.23 V** |
+| [08 — Servo position control](experiments/08-servo-position-control.md) | External motor power, common GND, Servo library | External supply: **+5.12 V** unloaded; SG90 visibly moved among requested positions |
+| [09 — Button-controlled servo](experiments/09-button-servo-toggle.md) | `INPUT_PULLUP`, state variables, debounce and toggle | Button-controlled motion and press-to-toggle behavior confirmed; angles not independently measured |
 
-**Experiment dates:** October 10–12, 2026. Values are transcribed from readings observed during the experiments; calculations and measurements are labeled separately. Some measurements were affected by unstable probe contact. Experiment 06 remains in progress; its button-triggered behavior has not been independently verified.
+**Experiment dates:** October 10–13, 2026. Values are transcribed from readings observed during the experiments; calculations and measurements are labeled separately. Some measurements were affected by unstable probe contact. Experiment 06 remains in progress with respect to its original LED press-to-light trial; the same style of switch input was successfully demonstrated later in Experiment 09.
 
 ## Photo documentation
 
-**40 photographs and other images** from these experiments are available in the [photo gallery](photos/README.md); the [one-page overview](photos/overview.jpg) still covers the first 29 photos. Newly added media include selected video-frame montages and an Arduino IDE screenshot. The experiment notes also link directly to photographs of the relevant equipment and circuit iterations. Photographs show the actual bench setups, including intermediate and occasionally incorrect wiring configurations; they should be used alongside the verified schematic, not as unqualified wiring instructions.
+**50 photographs and other images** from these experiments are available in the [photo gallery](photos/README.md); the [one-page overview](photos/overview.jpg) still covers the first 29 photos. Media include video-frame montages, wiring photographs, power-supply polarity markings, and an Arduino IDE screenshot. The experiment notes also link directly to photographs of the relevant equipment and circuit iterations. Photographs show the actual bench setups, including intermediate and occasionally incorrect wiring configurations; they should be used alongside the verified schematic, not as unqualified wiring instructions.
 
 <div align="center">
 <img src="photos/images/IMG_7669.jpg" alt="Arduino UNO R4 Minima" width="31%" />
@@ -46,6 +49,7 @@ This repository is my independent electronics engineering notebook. I study circ
 - Discrete resistors, primarily 1 kΩ, 10 kΩ, and 100 kΩ
 - 100 µF polarized electrolytic capacitor, LED, and two-lead pushbutton
 - Arduino IDE for code upload and GPIO experiments
+- SG90 servo motor, servo horn, 5 V / 2 A external adapter, and DC jack/screw-terminal converter
 
 ## Engineering workflow
 
@@ -58,9 +62,13 @@ This repository is my independent electronics engineering notebook. I study circ
 
 A reusable [experiment template](templates/experiment-template.md) keeps future entries consistent.
 
+## Arduino sketches
+
+Reproducible Arduino IDE sketches for Experiments 07–09 are in [`sketches/`](sketches/), with a separate folder for each buildable `.ino` sketch. The relevant experiment pages explain the wiring, measured results, and limitations.
+
 ## Next topics
 
-Verify the two-lead button input → PWM LED brightness → servo control → sensors (ultrasonic rangefinder and IMU) → I²C/OLED → embedded-system integration → robotics. Continue deeper capacitor, diode, transistor, MOSFET, and operational-amplifier theory alongside practical experiments.
+HC-SR04 ultrasonic distance measurement → distance-driven servo target selection → IMU-based orientation measurements → I²C/OLED readout → multi-component robot mechanisms. Revisit non-blocking `millis()`-based switch debouncing and continue deeper capacitor, diode, transistor, MOSFET, and operational-amplifier theory alongside practical experiments.
 
 ## Safety notes
 
@@ -70,3 +78,5 @@ Verify the two-lead button input → PWM LED brightness → servo control → se
 - Confirm multimeter input jacks and ranges before reconnecting power.
 - Check LED and electrolytic-capacitor polarity and use a current-limiting resistor for the LED.
 - Use properly fitting connectors; do not force wide component leads into breadboard sockets.
+- When using external motor supplies, verify polarity with a voltmeter, share the signal ground, and **do not connect the separate supply's +5 V to Arduino's 5 V rail**.
+- Power down both the USB-powered Arduino and external motor adapter before changing servo wiring.
