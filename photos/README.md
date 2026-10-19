@@ -1,6 +1,6 @@
 # Experiment Photo Gallery
 
-**40 images** from the October 10–12, 2026 electronics experiments (including video-frame montages and an IDE screenshot).
+**52 images** from the October 10–19, 2026 electronics experiments (including video-frame montages, an IDE screenshot, an annotated troubleshooting close-up, and an OLED result photograph).
 
 These photos document real intermediate setups, not only verified final circuits. Some images show wiring that was later changed or corrected; use the [experiment reports](../README.md#hands-on-experiments) and their circuit models for authoritative electrical connections.
 
@@ -183,3 +183,15 @@ The DC-voltage measurements (**2.40 V** at PWM 128 and **1.20 V** at PWM 64) wer
 ![Frames showing changes in servo horn position during the button input experiment](images/servo-button-frames.jpg)
 
 The user confirmed that the servo changed position with the button and that the later press-to-toggle program worked. See [Experiment 09](../experiments/09-button-servo-toggle.md) for code and limitations.
+
+## 2026-10-19 — IMU I²C troubleshooting and OLED success
+
+### IMG_7931 — XIAO header solder bridge before repair (annotated)
+![Close-up of XIAO ESP32S3 Sense soldered pin headers, with a red circle around the suspected bridge between adjacent pins](images/IMG_7931.jpg)
+
+The solder was subsequently separated. Continuity between D4 and D5 was no longer detected, and the six-axis IMU then responded over I²C. See [Experiment 12](../experiments/12-imu-acceleration-gyroscope.md).
+
+### IMG_7932 — OLED text visible over I²C
+![XIAO board and OLED displaying HELLO!, electronics-lab, and Count: 16](images/IMG_7932.jpg)
+
+See [Experiment 13](../experiments/13-oled-i2c-display.md).

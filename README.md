@@ -28,12 +28,18 @@ This repository is my independent electronics engineering notebook. I study circ
 | [07 — PWM LED brightness](experiments/07-pwm-led-voltage.md) | PWM duty cycle, LED fade, D9-to-GND DC voltage | `128`: **2.40 V**; `64`: **1.20 V**; calculated comparisons **2.46 V / 1.23 V** |
 | [08 — Servo position control](experiments/08-servo-position-control.md) | External motor power, common GND, Servo library | External supply: **+5.12 V** unloaded; SG90 visibly moved among requested positions |
 | [09 — Button-controlled servo](experiments/09-button-servo-toggle.md) | `INPUT_PULLUP`, state variables, debounce and toggle | Button-controlled motion and press-to-toggle behavior confirmed; angles not independently measured |
+| [10 — Ultrasonic distance](experiments/10-ultrasonic-distance.md) | HC-SR04 distance estimation | Completed; historical numeric readings and sketch were not retained |
+| [11 — Distance-driven servo](experiments/11-distance-servo-control.md) | HC-SR04 controlling SG90 | Completed; original threshold values, angles, and sketch were not retained |
+| [12 — Six-axis IMU](experiments/12-imu-acceleration-gyroscope.md) | XIAO ESP32S3 Sense, I²C, LSM6DSV16X | `0x6A` detected; `WHO_AM_I` returned `0x70`; three-axis acceleration and gyroscope output succeeded |
+| [13 — I²C OLED display](experiments/13-oled-i2c-display.md) | 128×64 OLED and changing counter | `HELLO!`, `electronics-lab`, and `Count: 16` visible |
+| [14 — IMU-controlled servo](experiments/14-imu-tilt-servo.md) | Tilt estimation, filtering, and PWM | SG90 movement following IMU tilt confirmed; angles not independently measured |
+| [15 — ESP32 wireless](experiments/15-esp32-wireless.md) | Wi-Fi scanning; network communication and BLE pending | **In progress:** 11 nearby SSIDs discovered after connecting the external antenna |
 
-**Experiment dates:** October 10–13, 2026. Values are transcribed from readings observed during the experiments; calculations and measurements are labeled separately. Some measurements were affected by unstable probe contact. Experiment 06 remains in progress with respect to its original LED press-to-light trial; the same style of switch input was successfully demonstrated later in Experiment 09.
+**Experiment dates:** October 10–19, 2026; the exact session dates of Experiments 10–11 were not retained. Values are transcribed from readings observed during the experiments; calculations and measurements are labeled separately. Some measurements were affected by unstable probe contact. Experiment 06 remains in progress with respect to its original LED press-to-light trial; the same style of switch input was successfully demonstrated later in Experiment 09. Experiment 15 remains in progress because Wi-Fi association, application data exchange, and Bluetooth LE have not yet been verified.
 
 ## Photo documentation
 
-**50 photographs and other images** from these experiments are available in the [photo gallery](photos/README.md); the [one-page overview](photos/overview.jpg) still covers the first 29 photos. Media include video-frame montages, wiring photographs, power-supply polarity markings, and an Arduino IDE screenshot. The experiment notes also link directly to photographs of the relevant equipment and circuit iterations. Photographs show the actual bench setups, including intermediate and occasionally incorrect wiring configurations; they should be used alongside the verified schematic, not as unqualified wiring instructions.
+**52 photographs and other images** from these experiments are available in the [photo gallery](photos/README.md); the [one-page overview](photos/overview.jpg) still covers the first 29 photos. Media include video-frame montages, wiring photographs, power-supply polarity markings, an Arduino IDE screenshot, an annotated solder-bridge close-up, and a working OLED display. The experiment notes also link directly to photographs of the relevant equipment and circuit iterations. Photographs show the actual bench setups, including intermediate and occasionally incorrect wiring configurations; they should be used alongside the verified schematic, not as unqualified wiring instructions.
 
 <div align="center">
 <img src="photos/images/IMG_7669.jpg" alt="Arduino UNO R4 Minima" width="31%" />
@@ -50,6 +56,8 @@ This repository is my independent electronics engineering notebook. I study circ
 - 100 µF polarized electrolytic capacitor, LED, and two-lead pushbutton
 - Arduino IDE for code upload and GPIO experiments
 - SG90 servo motor, servo horn, 5 V / 2 A external adapter, and DC jack/screw-terminal converter
+- Seeed Studio XIAO ESP32S3 Sense with external Wi-Fi antenna
+- AE-LSM6DSV16X six-axis IMU, HC-SR04 ultrasonic sensor, and 0.96-inch I²C OLED
 
 ## Engineering workflow
 
@@ -64,11 +72,11 @@ A reusable [experiment template](templates/experiment-template.md) keeps future 
 
 ## Arduino sketches
 
-Reproducible Arduino IDE sketches for Experiments 07–09 are in [`sketches/`](sketches/), with a separate folder for each buildable `.ino` sketch. The relevant experiment pages explain the wiring, measured results, and limitations.
+Available Arduino IDE sketches for Experiments 07–09 and 12–14 are in [`sketches/`](sketches/), with a separate folder for each buildable `.ino` sketch. Historical source for Experiments 10, 11, and 15 was not retained, so no reconstructed code is presented as tested source. The relevant experiment pages explain the wiring, measured results, and limitations.
 
 ## Next topics
 
-HC-SR04 ultrasonic distance measurement → distance-driven servo target selection → IMU-based orientation measurements → I²C/OLED readout → multi-component robot mechanisms. Revisit non-blocking `millis()`-based switch debouncing and continue deeper capacitor, diode, transistor, MOSFET, and operational-amplifier theory alongside practical experiments.
+Finish Wi-Fi network communication and Bluetooth LE in Experiment 15 → integrate the IMU, OLED, servo, and Wi-Fi → add motor drivers and feedback control → build multi-component robot mechanisms. Revisit non-blocking `millis()`-based switch debouncing and continue deeper capacitor, diode, transistor, MOSFET, and operational-amplifier theory alongside practical experiments.
 
 ## Safety notes
 
@@ -80,3 +88,4 @@ HC-SR04 ultrasonic distance measurement → distance-driven servo target selecti
 - Use properly fitting connectors; do not force wide component leads into breadboard sockets.
 - When using external motor supplies, verify polarity with a voltmeter, share the signal ground, and **do not connect the separate supply's +5 V to Arduino's 5 V rail**.
 - Power down both the USB-powered Arduino and external motor adapter before changing servo wiring.
+- Power down before continuity checks or solder repair, and keep 5 V signals away from the XIAO's 3.3 V GPIO and sensor rails.
