@@ -1,6 +1,6 @@
 # Experiment Photo Gallery
 
-**52 images** from the October 10–19, 2026 electronics experiments (including video-frame montages, an IDE screenshot, an annotated troubleshooting close-up, and an OLED result photograph).
+**57 images** from the October 10–27, 2026 electronics experiments (including video-frame montages, an IDE screenshot, an annotated troubleshooting close-up, an OLED result photograph, the integrated pan-tilt assembly, and a live dashboard screenshot).
 
 These photos document real intermediate setups, not only verified final circuits. Some images show wiring that was later changed or corrected; use the [experiment reports](../README.md#hands-on-experiments) and their circuit models for authoritative electrical connections.
 
@@ -195,3 +195,28 @@ The solder was subsequently separated. Continuity between D4 and D5 was no longe
 ![XIAO board and OLED displaying HELLO!, electronics-lab, and Count: 16](images/IMG_7932.jpg)
 
 See [Experiment 13](../experiments/13-oled-i2c-display.md).
+
+## 2026-10-21 to 2026-10-22 — Experiment 15 wireless control context
+
+### exp15-single-servo-bench-frame — Single-servo ESP32 bench setup
+![Bench setup with an ESP32 board and standalone SG90 servo, extracted from a recorded session](images/exp15-single-servo-bench-frame.jpg)
+
+This video-derived frame provides hardware context only. It does not independently prove Wi-Fi traffic, BLE communication, or commanded shaft angles. See [Experiment 15](../experiments/15-esp32-wireless.md).
+
+## 2026-10-24 to 2026-10-27 — Experiment 16 integrated pan-tilt robotics
+
+### exp16-pan-tilt-assembly — Two-axis servo assembly and bench setup
+![Two SG90 servos fitted to a two-axis pan-tilt bracket beside an ESP32-S3 bench setup and an external servo-power connector](images/exp16-pan-tilt-assembly.jpg)
+
+### exp16-servo-power-wiring — External servo-power wiring close-up
+![Close-up of a servo connector and external power-input adapter used during the two-axis pan-tilt assembly](images/exp16-servo-power-wiring.jpg)
+
+Wire color alone is not a complete schematic; the tested lead mapping and circuit connections are documented in the [Experiment 16 report](../experiments/16-esp32s3-integrated-pan-tilt-robotics.md).
+
+### exp16-pan-tilt-video-frame — Recorded integration-session bench view
+![Overhead bench view of the XIAO ESP32S3 and two-axis servo bracket during the recorded integration session](images/exp16-pan-tilt-video-frame.jpg)
+
+### exp16-web-dashboard — Live browser control and telemetry
+![Working ESP32 robotics dashboard with PAN and TILT controls and live six-axis IMU values, including sample 1087](images/exp16-web-dashboard.jpg)
+
+The dashboard image preserves an observed instant from the working system; it is not a calibrated sensor dataset or a long-duration reliability test.

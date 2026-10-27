@@ -1,75 +1,81 @@
-# Experiment 15 — ESP32-S3 Wi-Fi and Bluetooth LE
+# Experiment 15 — ESP32-S3 Wi-Fi and Bluetooth Low Energy
 
-**Date:** 2026-10-19  
-**Status:** In progress — Wi-Fi scanning succeeded; association, data exchange and BLE remain unverified
+**Date:** 2026-10-19 to 2026-10-22 (the first scanning observations were recorded on 2026-10-19; subsequent network and BLE tests were completed by 2026-10-22)
+
+**Status:** Completed — Wi-Fi discovery, network communication, browser-controlled actuation, and BLE GATT interaction were demonstrated
 
 ## Objective
 
-Test wireless networking on the XIAO ESP32S3 Sense, first discovering nearby 2.4 GHz Wi-Fi access points, then progressing to network communication and Bluetooth Low Energy.
+Demonstrate wireless communication on the Seeed Studio XIAO ESP32S3 Sense, distinguishing Wi-Fi scanning from actual IP communication and BLE advertising from GATT data exchange. Use a Mac to control an SG90 servo over a wireless network and read/write a BLE characteristic.
 
-## Reference / theory
+## Reference and theory
 
-The ESP32-S3 radio supports 2.4 GHz Wi-Fi and Bluetooth Low Energy. A successful Wi-Fi **scan** demonstrates local network discovery, but does not mean the device is connected to an access point, has obtained an IP address, or can exchange application data.
+Wi-Fi scanning detects advertised networks. Successful scanning by itself does not demonstrate association, an assigned IP address, or application data exchange. A local HTTP server can receive commands over TCP/IP after a network connection is established. BLE uses advertising for discovery and GATT services/characteristics for structured reads and writes. BLE discovery alone does not demonstrate data transfer.
 
-## Equipment
+The servo test commanded positions of 30°, 90°, and 150°. These are software command angles; shaft positions were not independently measured.
 
-- Seeed Studio XIAO ESP32S3 Sense
-- External antenna and u.FL antenna connector
-- USB connection to Mac; Arduino IDE and ESP32 Wi-Fi scan program
+## Equipment and tools
 
-## Circuit
+- Seeed Studio XIAO ESP32S3 Sense and external Wi-Fi antenna
+- Mac computer and USB connection
+- SG90 servo and appropriate power wiring with a shared control-signal reference
+- Arduino IDE, a Wi-Fi scan program, an HTTP control program, and a BLE server program
+- Chrome or another local browser; LightBlue BLE application on the Mac
 
-The XIAO was powered by USB, and the external antenna was connected for the successful scan. No breadboard, IMU, servo, or OLED was necessary in the scanning setup.
+Exact historical Arduino sketches for this series have not been recovered in the provided handoff. Do not reconstruct them and label them as the originally tested source.
 
-## Experimental procedure
+## Wiring and network configuration
 
-1. Power the XIAO ESP32S3 Sense over USB and run a Wi-Fi scanning program.
-2. Record the initial scan result before the external antenna is connected.
-3. Connect the external antenna carefully to the u.FL connector.
-4. Repeat the scan and compare the number of discovered networks.
-5. Stop at network discovery; do not report association, IP configuration, application data transfer, or Bluetooth LE as completed.
+The initial Wi-Fi scan used the USB-powered XIAO and external antenna, without the servo. In the later HTTP control experiment, the ESP32 and SG90 were wired so the controller could transmit servo control pulses while the servo was independently powered; see the earlier SG90 and common-ground documentation for the wiring principle.
 
-## Predictions
+A temporary local Wi-Fi address of `192.168.11.19` was observed during a successful network-associated session. It is **not a static or guaranteed address**. The public report intentionally omits the private network's SSID and password.
 
-When properly connected to an antenna and powered, the ESP32-S3 should discover visible nearby 2.4 GHz networks. Network count varies with RF conditions and location.
+Bluetooth device name observed: `electronics-lab-BLE`. Service UUID and characteristic UUID were not preserved and are not guessed.
 
-## Measurements and observations
+## Procedure and observed results
 
-| Test | Expected | Observation | Qualification |
+| Stage | Expected outcome | Observed result | Evidence and limits |
 | --- | --- | --- | --- |
-| Initial network scan | Some nearby SSIDs may be found | **Networks found: 0** | External antenna had not been connected |
-| Scan after connecting external antenna | Nearby SSIDs detected | **11 SSIDs listed** | Direct Arduino Serial Monitor output |
-| Wi-Fi association | Connected and assigned an address | **Not tested or verified** | Work remaining |
-| Mac-to-XIAO data transfer | Successful application messages | **Not tested or verified** | Work remaining |
-| Bluetooth LE discovery and transfer | Advertise/connect/data | **Not tested or verified** | Work remaining |
+| Initial Wi-Fi scan | Nearby SSIDs may be found | **0 networks found** | External antenna was not attached |
+| Wi-Fi scan with antenna | Discover nearby access points | **11 SSIDs discovered** | Serial output from the earlier experiment |
+| Wi-Fi association | Join local network | **Succeeded** | Session account; access-point details withheld |
+| IP addressing | Receive local IP | **192.168.11.19 observed** | One session; not a reserved address |
+| HTTP servo control | Trigger SG90 from Mac browser | **Servo moved in response** | 30°, 90°, and 150° commands issued; mechanical angles unmeasured |
+| BLE advertising and discovery | Mac finds ESP32 BLE server | **Succeeded** | Device appeared as `electronics-lab-BLE` in LightBlue |
+| GATT service/characteristic interaction | Access characteristic | **Read and Write succeeded** | Exact service and characteristic UUIDs not retained |
+| BLE Write reception | Receive data on ESP32 | **`Hello ESP32` appeared in serial output** | Actual retained serial text below |
 
-The actual neighboring Wi-Fi network names are intentionally omitted from the public log.
+### Preserved BLE console output
 
-## Arduino code
+```text
+Starting BLE...
+BLE advertising started!
+Received: Hello ESP32
+```
 
-The exact successful Wi-Fi scan source was not saved, so no fabricated 'tested' sketch is added to this repository.
+These outputs demonstrate advertising and incoming data reception, but do not establish every possible BLE connection/reconnection behavior or long-duration stability.
 
-## Photos
+## Visual evidence
 
-No photo of the wireless test setup is included in this update.
+![A standalone servo and ESP32 bench arrangement, extracted from a video captured after the previous repository update](../photos/images/exp15-single-servo-bench-frame.jpg)
+
+This frame illustrates a single-servo bench setup. **The frame does not independently demonstrate Wi-Fi, HTTP traffic, BLE connections, or commanded shaft angles.** The source video was reviewed as supplemental evidence and is not published in this repository.
 
 ## Troubleshooting
 
-The first scan returned **Networks found: 0**. Investigation identified that the external antenna had not been connected. After connecting it and repeating the scan, **11 SSIDs** were listed. This confirms that the antenna connection changed the observed scan outcome, while not constituting a full RF performance test.
+The first Wi-Fi scan found zero networks because the external antenna had not been connected. After connecting the external antenna, the next observed scan found 11 networks. Avoid claiming this is an RF sensitivity benchmark: the environment, interference, and antenna configuration were not independently controlled.
 
 ## Analysis
 
-The initial zero-network result was followed by successful discovery after the missing external antenna connection was addressed. This supports working basic Wi-Fi network scanning; it does not test reliable data communication or the Bluetooth peripheral.
+The progression from (1) SSID discovery to (2) network association and local HTTP application traffic is materially stronger evidence of working Wi-Fi functionality than a scan result alone. Likewise, BLE advertising plus GATT Read and Write demonstrates bidirectional interaction rather than mere nearby-device discovery.
 
-## Lessons learned
+## Measurement integrity and limitations
 
-- Handle u.FL antenna connectors carefully and avoid repeated radio testing without a suitable antenna.
-- A successful Wi-Fi scan verifies discovery only; it does not verify association, IP networking, or application communication.
-- The original tested source should be preserved when it becomes available rather than reconstructed and labeled as historical code.
+- `192.168.11.19` was observed; it is not a guaranteed address.
+- Servo angles were software commands, not calibrated shaft measurements.
+- BLE service and characteristic UUIDs, precise signal strength, connection latency, power consumption, and reconnection endurance were not retained.
+- The exact historical sketches were not available in the provided archive.
 
-## Next steps
+## Safety and next steps
 
-- Join an authorized Wi-Fi network and retain the connection and IP-address output.
-- Exchange a simple HTTP or socket message with the Mac.
-- Test Bluetooth Low Energy advertising, discovery, connection, and data transfer independently.
-- Keep Experiment 15 **in progress** until those functions are demonstrated.
+Use an appropriate external supply for servos, share ground with the MCU, and never connect an external +5 V line to an ESP32-S3 3.3 V power or GPIO line. Verify antenna attachment before Wi-Fi testing. Wireless functions were subsequently reused in [Experiment 16](16-esp32s3-integrated-pan-tilt-robotics.md), which combined two-axis actuation, sensors, an OLED, and a local web dashboard.

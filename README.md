@@ -33,13 +33,16 @@ This repository is my independent electronics engineering notebook. I study circ
 | [12 — Six-axis IMU](experiments/12-imu-acceleration-gyroscope.md) | XIAO ESP32S3 Sense, I²C, LSM6DSV16X | `0x6A` detected; `WHO_AM_I` returned `0x70`; three-axis acceleration and gyroscope output succeeded |
 | [13 — I²C OLED display](experiments/13-oled-i2c-display.md) | 128×64 OLED and changing counter | `HELLO!`, `electronics-lab`, and `Count: 16` visible |
 | [14 — IMU-controlled servo](experiments/14-imu-tilt-servo.md) | Tilt estimation, filtering, and PWM | SG90 movement following IMU tilt confirmed; angles not independently measured |
-| [15 — ESP32 wireless](experiments/15-esp32-wireless.md) | Wi-Fi scanning; network communication and BLE pending | **In progress:** 11 nearby SSIDs discovered after connecting the external antenna |
+| [15 — ESP32 wireless](experiments/15-esp32-wireless.md) | Wi-Fi discovery, HTTP servo control, and Bluetooth Low Energy | Completed: association and local HTTP control succeeded; BLE advertising plus GATT Read/Write confirmed |
+| [16 — ESP32-S3 integrated pan-tilt robotics](experiments/16-esp32s3-integrated-pan-tilt-robotics.md) | ESP-IDF v6.1 and C, dual SG90 servos, shared I²C IMU/OLED, Wi-Fi SoftAP, HTTP control, and live telemetry | OLED `0x3C` and IMU `0x6A` detected; `WHO_AM_I = 0x70`; browser PAN/TILT actuation and six-axis telemetry confirmed |
 
-**Experiment dates:** October 10–19, 2026; the exact session dates of Experiments 10–11 were not retained. Values are transcribed from readings observed during the experiments; calculations and measurements are labeled separately. Some measurements were affected by unstable probe contact. Experiment 06 remains in progress with respect to its original LED press-to-light trial; the same style of switch input was successfully demonstrated later in Experiment 09. Experiment 15 remains in progress because Wi-Fi association, application data exchange, and Bluetooth LE have not yet been verified.
+**Experiment dates:** October 10–27, 2026; the exact session dates of Experiments 10–11 were not retained. Values are transcribed from readings observed during the experiments; calculations and measurements are labeled separately. Some measurements were affected by unstable probe contact. Experiment 06 remains in progress with respect to its original LED press-to-light trial; the same style of switch input was successfully demonstrated later in Experiment 09.
+
+**Integrated robotics milestone completed on October 27, 2026.** Experiment 16 combines ESP-IDF and C, two SG90 servo axes, an LSM6DSV16X inertial sensor, an SSD1306-compatible OLED, direct Wi-Fi control, and a browser dashboard. Both axes responded physically to browser commands while six-axis telemetry updated on the OLED and web page. See the [Experiment 16 report](experiments/16-esp32s3-integrated-pan-tilt-robotics.md) for the measured observations, troubleshooting, and test limits.
 
 ## Photo documentation
 
-**52 photographs and other images** from these experiments are available in the [photo gallery](photos/README.md); the [one-page overview](photos/overview.jpg) still covers the first 29 photos. Media include video-frame montages, wiring photographs, power-supply polarity markings, an Arduino IDE screenshot, an annotated solder-bridge close-up, and a working OLED display. The experiment notes also link directly to photographs of the relevant equipment and circuit iterations. Photographs show the actual bench setups, including intermediate and occasionally incorrect wiring configurations; they should be used alongside the verified schematic, not as unqualified wiring instructions.
+**57 photographs and other images** from these experiments are available in the [photo gallery](photos/README.md); the [one-page overview](photos/overview.jpg) still covers the first 29 photos. Media include video-frame montages, wiring photographs, power-supply polarity markings, an Arduino IDE screenshot, an annotated solder-bridge close-up, a working OLED display, the integrated pan-tilt assembly, and the live browser dashboard. The experiment notes also link directly to photographs of the relevant equipment and circuit iterations. Photographs show the actual bench setups, including intermediate and occasionally incorrect wiring configurations; they should be used alongside the verified schematic, not as unqualified wiring instructions.
 
 <div align="center">
 <img src="photos/images/IMG_7669.jpg" alt="Arduino UNO R4 Minima" width="31%" />
@@ -55,9 +58,10 @@ This repository is my independent electronics engineering notebook. I study circ
 - Discrete resistors, primarily 1 kΩ, 10 kΩ, and 100 kΩ
 - 100 µF polarized electrolytic capacitor, LED, and two-lead pushbutton
 - Arduino IDE for code upload and GPIO experiments
-- SG90 servo motor, servo horn, 5 V / 2 A external adapter, and DC jack/screw-terminal converter
+- Two SG90 servos, a two-axis pan-tilt bracket, servo horns, a separate nominal 5 V supply, and a DC jack/screw-terminal converter
 - Seeed Studio XIAO ESP32S3 Sense with external Wi-Fi antenna
 - AE-LSM6DSV16X six-axis IMU, HC-SR04 ultrasonic sensor, and 0.96-inch I²C OLED
+- ESP-IDF v6.1 and C for integrated embedded firmware development
 
 ## Engineering workflow
 
@@ -70,13 +74,15 @@ This repository is my independent electronics engineering notebook. I study circ
 
 A reusable [experiment template](templates/experiment-template.md) keeps future entries consistent.
 
-## Arduino sketches
+## Firmware and Arduino sketches
 
-Available Arduino IDE sketches for Experiments 07–09 and 12–14 are in [`sketches/`](sketches/), with a separate folder for each buildable `.ino` sketch. Historical source for Experiments 10, 11, and 15 was not retained, so no reconstructed code is presented as tested source. The relevant experiment pages explain the wiring, measured results, and limitations.
+Available Arduino IDE sketches for Experiments 07–09 and 12–14 are in [`sketches/`](sketches/), with a separate folder for each buildable `.ino` sketch. Historical Arduino source for Experiments 10, 11, and 15 was not retained, so no reconstructed code is presented as tested source.
+
+The actual last-tested ESP-IDF v6.1 source for Experiment 16 is published in [`firmware/esp32s3-experiment16/`](firmware/esp32s3-experiment16/). Generated build files, local configuration, backups, development-machine paths, and private credentials are excluded.
 
 ## Next topics
 
-Finish Wi-Fi network communication and Bluetooth LE in Experiment 15 → integrate the IMU, OLED, servo, and Wi-Fi → add motor drivers and feedback control → build multi-component robot mechanisms. Revisit non-blocking `millis()`-based switch debouncing and continue deeper capacitor, diode, transistor, MOSFET, and operational-amplifier theory alongside practical experiments.
+Phase 2 direction: transistor and MOSFET circuits → motor drivers → encoders → feedback and PID control → more capable robot mechanisms. These are planned topics, not completed experiments. Continue deeper circuit theory alongside practical embedded-system work.
 
 ## Safety notes
 
@@ -89,3 +95,5 @@ Finish Wi-Fi network communication and Bluetooth LE in Experiment 15 → integra
 - When using external motor supplies, verify polarity with a voltmeter, share the signal ground, and **do not connect the separate supply's +5 V to Arduino's 5 V rail**.
 - Power down both the USB-powered Arduino and external motor adapter before changing servo wiring.
 - Power down before continuity checks or solder repair, and keep 5 V signals away from the XIAO's 3.3 V GPIO and sensor rails.
+- Verify servo lead functions on the actual hardware; in the tested two-axis assembly, brown was ground, orange was external +5 V, and yellow was the PWM signal.
+- Stop immediately if a mounted servo binds, stalls, or heats abnormally; recheck mechanical alignment before expanding the command range.
